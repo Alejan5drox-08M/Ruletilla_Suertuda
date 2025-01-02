@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.ruletasuerte_isaacalejandro"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.ruletasuerte_isaacalejandro"
@@ -25,6 +25,9 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+    buildFeatures{
+        viewBinding=true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
