@@ -5,16 +5,25 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
+import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain3Binding
+import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
 
 class MainActivity3 : AppCompatActivity() {
+    lateinit var mibinding: ActivityMain3Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main3)
+
+        mibinding= ActivityMain3Binding.inflate(layoutInflater)
+
+        setContentView(mibinding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val resultadoRuleta = intent.getStringExtra("clave")
     }
 }

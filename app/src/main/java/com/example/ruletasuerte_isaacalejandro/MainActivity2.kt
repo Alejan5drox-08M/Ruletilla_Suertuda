@@ -54,6 +54,7 @@ class MainActivity2 : AppCompatActivity() {
 
                 override fun onAnimationEnd(animation: Animation?) {
                     var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
+                    miIntent.putExtra("clave", currentNumber(360-degree%360))
                     if (miIntent.resolveActivity(packageManager) != null){
                         startActivity(miIntent)
                     }
