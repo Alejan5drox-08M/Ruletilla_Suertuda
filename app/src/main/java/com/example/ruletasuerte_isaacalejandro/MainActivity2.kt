@@ -1,5 +1,6 @@
 package com.example.ruletasuerte_isaacalejandro
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
@@ -52,6 +53,10 @@ class MainActivity2 : AppCompatActivity() {
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
+                    var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
+                    if (miIntent.resolveActivity(packageManager) != null){
+                        startActivity(miIntent)
+                    }
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {
