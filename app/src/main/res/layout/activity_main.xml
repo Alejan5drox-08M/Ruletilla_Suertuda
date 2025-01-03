@@ -36,23 +36,28 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.36">
 
-            <CheckBox
-                android:id="@+id/checkBox"
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2 JUGADORES" />
+                android:layout_height="match_parent" >
 
-            <CheckBox
-                android:id="@+id/checkBox2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3 JUGADORES" />
+                <RadioButton
+                    android:id="@+id/radioButtonJugadores2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="2 JUGADORES" />
 
-            <CheckBox
-                android:id="@+id/checkBox3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4 JUGADORES" />
+                <RadioButton
+                    android:id="@+id/radioButtonJugadores3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="3 JUGADORES" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonJugadores4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="4 JUGADORES" />
+            </RadioGroup>
         </LinearLayout>
 
         <Button
