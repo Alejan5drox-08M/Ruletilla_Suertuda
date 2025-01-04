@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo3"
     tools:context=".MainActivity3">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,6 +42,7 @@
             android:layout_width="174dp"
             android:layout_height="41dp"
             android:layout_marginTop="16dp"
+            android:backgroundTint="#C17913"
             android:text="Vocal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,6 +53,7 @@
             android:layout_width="174dp"
             android:layout_height="41dp"
             android:layout_marginTop="16dp"
+            android:backgroundTint="#41BA24"
             android:text="Consonante"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,25 +61,25 @@
 
         <EditText
             android:id="@+id/editTextTextConsonante"
-            android:layout_width="101dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="44dp"
+            android:layout_height="43dp"
+            android:layout_marginTop="12dp"
             android:ems="10"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/botonConsonante" />
 
         <EditText
             android:id="@+id/editTextTextVocal"
-            android:layout_width="101dp"
-            android:layout_height="46dp"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/botonVocal" />
 
@@ -85,6 +88,7 @@
             android:layout_width="174dp"
             android:layout_height="41dp"
             android:layout_marginTop="12dp"
+            android:backgroundTint="#A313CC"
             android:text="RESOLVER"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

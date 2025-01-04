@@ -49,6 +49,7 @@ class MainActivity2 : AppCompatActivity() {
             val textViewJugador = TextView(this).apply {
                 text = "Jugador: JUGADOR $i"
                 textSize = 16f
+                setTextColor(resources.getColor(R.color.white))
                 layoutParams = LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -59,6 +60,7 @@ class MainActivity2 : AppCompatActivity() {
             val textViewPuntos = TextView(this).apply {
                 text = "Puntos: $puntos"
                 textSize = 16f
+                setTextColor(resources.getColor(R.color.white))
                 layoutParams = LinearLayout.LayoutParams(
                     0,
                     LinearLayout.LayoutParams.WRAP_CONTENT,

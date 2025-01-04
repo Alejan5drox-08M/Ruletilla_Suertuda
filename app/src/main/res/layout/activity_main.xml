@@ -5,30 +5,36 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo1"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="-27dp"
-        tools:layout_editor_absoluteY="-16dp">
+        tools:layout_editor_absoluteX="72dp"
+        tools:layout_editor_absoluteY="69dp">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="401dp"
+            android:layout_height="84dp"
             android:fontFamily="monospace"
             android:text="SELECCIONA LA CANTIDAD DE JUGADORES"
+            android:textAlignment="center"
             android:textAllCaps="true"
-            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.642" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="340dp"
-            android:layout_height="144dp"
+            android:layout_width="141dp"
+            android:layout_height="141dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,13 +44,14 @@
 
             <RadioGroup
                 android:id="@+id/radioGroupjugadores"
-                android:layout_width="match_parent"
+                android:layout_width="142dp"
                 android:layout_height="match_parent">
 
                 <RadioButton
                     android:id="@+id/radioButtonJugadores2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:buttonTintMode="src_in"
                     android:text="2 JUGADORES" />
 
                 <RadioButton
@@ -63,13 +70,14 @@
 
         <Button
             android:id="@+id/botonComenzar"
-            android:layout_width="174dp"
-            android:layout_height="42dp"
-            android:backgroundTint="#FFEB3B"
-            android:text="COMENZAR"
+            android:layout_width="184dp"
+            android:layout_height="63dp"
+            android:backgroundTint="#0040FF"
+            android:text="COMENZAR!"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
