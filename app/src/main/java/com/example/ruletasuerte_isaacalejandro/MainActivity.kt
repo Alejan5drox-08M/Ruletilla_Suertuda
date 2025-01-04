@@ -25,8 +25,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         mibinding.botonComenzar.setOnClickListener{
-            var miIntent = Intent(this, MainActivity2::class.java)
 
+            val opcionSeleccionada = when (mibinding.radioGroupjugadores.checkedRadioButtonId) {
+                mibinding.radioButtonJugadores2.id -> 2
+                mibinding.radioButtonJugadores3.id -> 3
+                mibinding.radioButtonJugadores4.id -> 4
+                else -> 0
+            }
+
+            var miIntent = Intent(this, MainActivity2::class.java)
+            miIntent.putExtra("numeroJugadores", opcionSeleccionada)
             if (miIntent.resolveActivity(packageManager) != null){
                 startActivity(miIntent)
             }

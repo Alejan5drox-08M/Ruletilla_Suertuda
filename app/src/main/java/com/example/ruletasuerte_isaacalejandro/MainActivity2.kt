@@ -7,11 +7,13 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.setPadding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
 import kotlin.random.Random
@@ -30,6 +32,43 @@ class MainActivity2 : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        var puntos = 0
+        val numeroJugadores = intent.getIntExtra("numeroJugadores", 0)
+
+        for(i in 1..numeroJugadores){
+            val layout = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                setPadding(0,8,0,8)
+            }
+
+            val textViewJugador = TextView(this).apply {
+                text = "Jugador: JUGADOR $i"
+                textSize = 16f
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+
+            val textViewPuntos = TextView(this).apply {
+                text = "Puntos: $puntos"
+                textSize = 16f
+                layoutParams = LinearLayout.LayoutParams(
+                    0,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    1f
+                )
+            }
+
+            layout.addView(textViewJugador)
+            layout.addView(textViewPuntos)
+            mibinding.layoutJugadores.addView(layout)
         }
         mibinding.botonTirar.setOnClickListener {
             startRotation()
