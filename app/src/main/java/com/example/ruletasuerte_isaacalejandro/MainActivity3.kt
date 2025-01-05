@@ -12,7 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain3Binding
-import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
+
 
 class MainActivity3 : AppCompatActivity() {
     lateinit var mibinding: ActivityMain3Binding
@@ -79,13 +79,22 @@ class MainActivity3 : AppCompatActivity() {
 
         // Cuando el jugador resuelve el panel, navega hacia MainActivity2
         mibinding.botonResolver.setOnClickListener {
-            // Guardar un nuevo panel y su pista en SharedPreferences
-            obtenerNuevoPanel()
+            val solucion = mibinding.editTextTextResolver.text.toString().trim()
+            val fraseOriginal = frase.trim()
 
-            // Navegar a MainActivity2
-            val intent = Intent(this, MainActivity2::class.java)
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(intent)
+            if (solucion.equals(fraseOriginal, ignoreCase = true)){
+                Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show()
+
+                obtenerNuevoPanel()
+
+                // Navegar a la pantalla de siguiente panel o reiniciar
+                val intent = Intent(this, MainActivity2::class.java)
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            } else {
+                Toast.makeText(this, "Respuesta incorrecta", Toast.LENGTH_SHORT).show()
+                mibinding.editTextTextResolver.text.clear()
             }
         }
         mibinding.botonTirarotravez.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.example.ruletasuerte_isaacalejandro
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.Animation
@@ -21,10 +22,12 @@ import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
 import kotlin.random.Random
 
 class MainActivity2 : AppCompatActivity() {
+    private var puntos = 0
     private var degree = 0
     private var degreeOld = 0
     private val factor:Float= 11.25f
     private lateinit var mibinding: ActivityMain2Binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

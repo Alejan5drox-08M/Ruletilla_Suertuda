@@ -2,7 +2,6 @@ package com.example.ruletasuerte_isaacalejandro
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Telephony.Mms.Intents
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
