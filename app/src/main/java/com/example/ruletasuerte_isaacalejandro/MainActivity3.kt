@@ -47,7 +47,6 @@ class MainActivity3 : AppCompatActivity() {
 
         // Listener del botón Consonante
         mibinding.botonConsonante.setOnClickListener {
-            // Llamamos al nuevo método comprobarConsonante
             comprobarLetra(mibinding.editTextTextConsonante,"aeiou", "Introduce una consonante válida")
         }
 
@@ -96,7 +95,6 @@ class MainActivity3 : AppCompatActivity() {
 
         // Validar que la letra es una consonante
         if (letra == null || letra in letras || !letra.isLetter()) {
-            // Validar que se introduzca una consonante válida
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show()
         } else {
             // Construir la nueva frase basada en la consonante

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -33,7 +34,7 @@ class MainActivity2 : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        var puntos = 0
+        val puntos = 0
         val numeroJugadores = intent.getIntExtra("numeroJugadores", 0)
 
         for(i in 1..numeroJugadores){
@@ -94,11 +95,19 @@ class MainActivity2 : AppCompatActivity() {
                 }
 
                 override fun onAnimationEnd(animation: Animation?) {
-                    var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
-                    miIntent.putExtra("clave", currentNumber(360-degree%360))
-                    if (miIntent.resolveActivity(packageManager) != null){
-                        startActivity(miIntent)
+                    if(currentNumber(360-(degree%360))=="Pierde Turno"){
+                        Toast.makeText(this@MainActivity2,"Pierdes tu turno", Toast.LENGTH_SHORT).show()
+                    }else if(currentNumber(360-(degree%360))=="Quiebra"){
+                        Toast.makeText(this@MainActivity2,"Quiebras", Toast.LENGTH_SHORT).show()
+                        var puntosPanel=0
+                    }else{
+                        var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
+                        miIntent.putExtra("clave", currentNumber(360-(degree%360)))
+                        if (miIntent.resolveActivity(packageManager) != null){
+                            startActivity(miIntent)
+                        }
                     }
+
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {

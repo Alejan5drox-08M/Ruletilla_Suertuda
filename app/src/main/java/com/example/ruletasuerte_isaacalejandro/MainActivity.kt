@@ -3,6 +3,7 @@ package com.example.ruletasuerte_isaacalejandro
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Telephony.Mms.Intents
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,18 +26,20 @@ class MainActivity : AppCompatActivity() {
         }
 
         mibinding.botonComenzar.setOnClickListener{
-
             val opcionSeleccionada = when (mibinding.radioGroupjugadores.checkedRadioButtonId) {
                 mibinding.radioButtonJugadores2.id -> 2
                 mibinding.radioButtonJugadores3.id -> 3
                 mibinding.radioButtonJugadores4.id -> 4
                 else -> 0
             }
-
-            var miIntent = Intent(this, MainActivity2::class.java)
-            miIntent.putExtra("numeroJugadores", opcionSeleccionada)
-            if (miIntent.resolveActivity(packageManager) != null){
-                startActivity(miIntent)
+            if(opcionSeleccionada==0){
+                Toast.makeText(this,"Selecciona un número de jugadores", Toast.LENGTH_SHORT).show()
+            }else{
+                var miIntent = Intent(this, MainActivity2::class.java)
+                miIntent.putExtra("numeroJugadores", opcionSeleccionada)
+                if (miIntent.resolveActivity(packageManager) != null){
+                    startActivity(miIntent)
+                }
             }
         }
     }
