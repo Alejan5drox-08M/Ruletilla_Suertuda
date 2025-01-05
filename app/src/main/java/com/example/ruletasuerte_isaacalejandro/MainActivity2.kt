@@ -14,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.setPadding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
@@ -27,52 +28,21 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        mibinding=ActivityMain2Binding.inflate(layoutInflater)
+        mibinding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(mibinding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        // Recuperar el número de jugadores de SharedPreferences
+        val sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
+        val numeroJugadores = sharedPreferences.getInt("numeroJugadores", 2) // 2 es el valor por defecto
+
+        if (numeroJugadores == 2) {
+            mibinding.layoutJugador3.isVisible = false
+            mibinding.layoutJugador4.isVisible = false
+        } else if (numeroJugadores == 3) {
+            mibinding.layoutJugador3.isVisible = true
+            mibinding.layoutJugador4.isVisible = false
         }
-        val puntos = 0
-        val numeroJugadores = intent.getIntExtra("numeroJugadores", 0)
 
-        for(i in 1..numeroJugadores){
-            val layout = LinearLayout(this).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setPadding(0,8,0,8)
-            }
-
-            val textViewJugador = TextView(this).apply {
-                text = "Jugador: JUGADOR $i"
-                textSize = 16f
-                setTextColor(resources.getColor(R.color.white))
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-
-            val textViewPuntos = TextView(this).apply {
-                text = "Puntos: $puntos"
-                textSize = 16f
-                setTextColor(resources.getColor(R.color.white))
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
-                )
-            }
-
-            layout.addView(textViewJugador)
-            layout.addView(textViewPuntos)
-            mibinding.layoutJugadores.addView(layout)
-        }
         mibinding.botonTirar.setOnClickListener {
             startRotation()
         }

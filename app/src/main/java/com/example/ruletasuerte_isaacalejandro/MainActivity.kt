@@ -16,6 +16,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Restablecer el valor predeterminado al iniciar la aplicación
+        val sharedPreferences = getSharedPreferences("panelData", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.clear() // Borra todos los valores guardados
+        editor.apply()
+
+
         mibinding=ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(mibinding.root)
@@ -35,11 +42,14 @@ class MainActivity : AppCompatActivity() {
             if(opcionSeleccionada==0){
                 Toast.makeText(this,"Selecciona un número de jugadores", Toast.LENGTH_SHORT).show()
             }else{
-                var miIntent = Intent(this, MainActivity2::class.java)
-                miIntent.putExtra("numeroJugadores", opcionSeleccionada)
-                if (miIntent.resolveActivity(packageManager) != null){
-                    startActivity(miIntent)
-                }
+                // Guardar el número de jugadores en SharedPreferences
+                val sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putInt("numeroJugadores", opcionSeleccionada)
+                editor.apply()
+
+                val miIntent = Intent(this, MainActivity2::class.java)
+                startActivity(miIntent)
             }
         }
     }

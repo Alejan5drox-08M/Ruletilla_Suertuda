@@ -9,10 +9,14 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
+import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain3Binding
+import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
 
 class MainActivity3 : AppCompatActivity() {
     lateinit var mibinding: ActivityMain3Binding
+    lateinit var mibinding2: ActivityMain2Binding
     val panel = Paneles()  // Instancia de la clase Paneles
     var frase = ""
     var pista = ""
@@ -23,13 +27,31 @@ class MainActivity3 : AppCompatActivity() {
         enableEdgeToEdge()
 
         mibinding = ActivityMain3Binding.inflate(layoutInflater)
+        mibinding2 = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(mibinding.root)
 
+        // Recuperar el número de jugadores de SharedPreferences
+        var sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
+        val numeroJugadores = sharedPreferences.getInt("numeroJugadores", 2) // 2 es el valor por defecto
+
+        if (numeroJugadores == 2) {
+            mibinding2.layoutJugador3.isVisible = false
+            mibinding2.layoutJugador4.isVisible = false
+        } else if (numeroJugadores == 3) {
+            mibinding2.layoutJugador3.isVisible = true
+            mibinding2.layoutJugador4.isVisible = false
+        }
+
+
+
         // Recuperar la frase y la pista desde SharedPreferences
-        val sharedPreferences = getSharedPreferences("panelData", Context.MODE_PRIVATE)
-        frase = sharedPreferences.getString("frase", "Frase no disponible") ?: "Frase no disponible"
-        pista = sharedPreferences.getString("pista", "Pista no disponible") ?: "Pista no disponible"
+        sharedPreferences = getSharedPreferences("panelData", Context.MODE_PRIVATE)
+        frase = sharedPreferences.getString("frase", "") ?: ""
+        pista = sharedPreferences.getString("pista", "") ?: ""
         estadoFrase = sharedPreferences.getString("estadoFrase", "").orEmpty()
+        if (frase.isEmpty() || pista.isEmpty()) {
+            obtenerNuevoPanel() // Obtiene una nueva frase y pista
+        }
 
         // Si no se ha guardado el estado de la frase, inicializamos con guiones bajos
         if (estadoFrase.isEmpty()) {
