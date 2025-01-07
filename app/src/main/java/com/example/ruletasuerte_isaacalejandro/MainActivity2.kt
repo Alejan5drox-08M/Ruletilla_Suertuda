@@ -74,8 +74,6 @@ class MainActivity2 : AppCompatActivity() {
                         builder.setTitle("PERDIDA DE TURNO")
                         builder.setMessage("Has perdido turno,  a jugar!")
                         builder.setPositiveButton("Vale") { dialog, which ->
-                            // Acción al presionar "Sí"
-                            //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
                         }
                         val dialog = builder.create()
                         dialog.show()
@@ -85,13 +83,9 @@ class MainActivity2 : AppCompatActivity() {
                         builder.setTitle("QUIEBRA")
                         builder.setMessage("Quebraste, tu puntuacion se ha reducido a 0 y pierdes turno")
                         builder.setPositiveButton("Vale") { dialog, which ->
-                            // Acción al presionar "Sí"
-                            //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
                         }
                         val dialog = builder.create()
                         dialog.show()
-                        //Toast.makeText(this@MainActivity2,"Quiebras", Toast.LENGTH_SHORT).show()
-                        var puntosPanel=0
                     }else{
                         var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
                         miIntent.putExtra("clave", currentNumber(360-(degree%360)))
