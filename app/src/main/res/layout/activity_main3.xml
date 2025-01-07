@@ -8,7 +8,74 @@
     android:background="@drawable/fondo3"
     tools:context=".MainActivity3">
 
+    <LinearLayout
+        android:id="@+id/botonesLayout"
+        android:layout_width="412dp"
+        android:layout_height="330dp"
+        android:layout_marginTop="92dp"
+        android:gravity="center|clip_vertical"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.655">
+
+        <EditText
+            android:id="@+id/editTextTextConsonante"
+            android:layout_width="44dp"
+            android:layout_height="43dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/botonConsonante"
+            android:layout_width="174dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#41BA24"
+            android:text="Consonante" />
+
+        <EditText
+            android:id="@+id/editTextTextVocal"
+            android:layout_width="42dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/botonVocal"
+            android:layout_width="174dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#C17913"
+            android:text="Vocal" />
+
+        <EditText
+            android:id="@+id/editTextTextResolver"
+            android:layout_width="366dp"
+            android:layout_height="46dp"
+            android:ems="10"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/botonResolver"
+            android:layout_width="174dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#A313CC"
+            android:text="RESOLVER" />
+
+        <Button
+            android:id="@+id/botonTirarotravez"
+            android:layout_width="174dp"
+            android:layout_height="41dp"
+            android:backgroundTint="#FF00E5"
+            android:gravity="center|fill_vertical"
+            android:text="Tirar otra vez"
+            android:textAlignment="center" />
+    </LinearLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="412dp"
         android:layout_height="379dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,96 +108,4 @@
             app:layout_constraintVertical_bias="0.806" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="411dp"
-        android:layout_height="372dp"
-        android:layout_marginBottom="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/botonVocal"
-            android:layout_width="174dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#C17913"
-            android:text="Vocal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextConsonante" />
-
-        <Button
-            android:id="@+id/botonConsonante"
-            android:layout_width="174dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="#41BA24"
-            android:text="Consonante"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/botonTirarotravez"
-            android:layout_width="174dp"
-            android:layout_height="41dp"
-            android:backgroundTint="#FF00E5"
-            android:text="Tirar otra vez"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextResolver" />
-
-        <EditText
-            android:id="@+id/editTextTextConsonante"
-            android:layout_width="44dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="12dp"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonConsonante" />
-
-        <EditText
-            android:id="@+id/editTextTextVocal"
-            android:layout_width="42dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonVocal" />
-
-        <Button
-            android:id="@+id/botonResolver"
-            android:layout_width="174dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="#A313CC"
-            android:text="RESOLVER"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextVocal" />
-
-        <EditText
-            android:id="@+id/editTextTextResolver"
-            android:layout_width="366dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="12dp"
-            android:ems="10"
-            android:inputType="text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.488"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonResolver"
-            app:layout_constraintVertical_bias="0.0" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

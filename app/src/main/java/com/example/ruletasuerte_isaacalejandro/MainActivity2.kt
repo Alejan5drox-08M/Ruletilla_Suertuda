@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -69,9 +70,27 @@ class MainActivity2 : AppCompatActivity() {
 
                 override fun onAnimationEnd(animation: Animation?) {
                     if(currentNumber(360-(degree%360))=="Pierde Turno"){
-                        Toast.makeText(this@MainActivity2,"Pierdes tu turno", Toast.LENGTH_SHORT).show()
+                        val builder = AlertDialog.Builder(this@MainActivity2)
+                        builder.setTitle("PERDIDA DE TURNO")
+                        builder.setMessage("Has perdido turno,  a jugar!")
+                        builder.setPositiveButton("Vale") { dialog, which ->
+                            // Acción al presionar "Sí"
+                            //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
+                        }
+                        val dialog = builder.create()
+                        dialog.show()
+                        //Toast.makeText(this@MainActivity2,"Pierdes tu turno", Toast.LENGTH_SHORT).show()
                     }else if(currentNumber(360-(degree%360))=="Quiebra"){
-                        Toast.makeText(this@MainActivity2,"Quiebras", Toast.LENGTH_SHORT).show()
+                        val builder = AlertDialog.Builder(this@MainActivity2)
+                        builder.setTitle("QUIEBRA")
+                        builder.setMessage("Quebraste, tu puntuacion se ha reducido a 0 y pierdes turno")
+                        builder.setPositiveButton("Vale") { dialog, which ->
+                            // Acción al presionar "Sí"
+                            //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
+                        }
+                        val dialog = builder.create()
+                        dialog.show()
+                        //Toast.makeText(this@MainActivity2,"Quiebras", Toast.LENGTH_SHORT).show()
                         var puntosPanel=0
                     }else{
                         var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)

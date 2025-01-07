@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -83,18 +84,44 @@ class MainActivity3 : AppCompatActivity() {
             val fraseOriginal = frase.trim()
 
             if (solucion.equals(fraseOriginal, ignoreCase = true)){
-                Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show()
+                val builder = AlertDialog.Builder(this@MainActivity3)
+                builder.setTitle("GANASTE")
+                builder.setMessage("Has ganado, enhorabuena!!")
+                builder.setPositiveButton("Vale") { dialog, which ->
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    if (intent.resolveActivity(packageManager) != null) {
+                        startActivity(intent)
+                    }
+                    // Acción al presionar "Sí"
+                    //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
+                }
+                val dialog = builder.create()
+                dialog.show()
+                //Toast.makeText(this, "Correcto", Toast.LENGTH_SHORT).show()
 
                 obtenerNuevoPanel()
 
                 // Navegar a la pantalla de siguiente panel o reiniciar
-                val intent = Intent(this, MainActivity2::class.java)
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                }
+
             } else {
-                Toast.makeText(this, "Respuesta incorrecta", Toast.LENGTH_SHORT).show()
-                mibinding.editTextTextResolver.text.clear()
+                val builder = AlertDialog.Builder(this@MainActivity3)
+                builder.setTitle("FALLASTE")
+                builder.setMessage("Has fallado, tu puntuacion se ha reducido a 0 y pierdes turno")
+                builder.setPositiveButton("Vale") { dialog, which ->
+
+                    mibinding.editTextTextResolver.text.clear()
+                    val intent = Intent(this, MainActivity2::class.java)
+                    if (intent.resolveActivity(packageManager) != null) {
+                        startActivity(intent)
+                    }
+                    // Acción al presionar "Sí"
+                    //Toast.makeText(this@MainActivity2, "Continuando...", Toast.LENGTH_SHORT).show()
+                }
+                val dialog = builder.create()
+                dialog.show()
+                //Toast.makeText(this, "Respuesta incorrecta", Toast.LENGTH_SHORT).show()
+
             }
         }
         mibinding.botonTirarotravez.setOnClickListener {
