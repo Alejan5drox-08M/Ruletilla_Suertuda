@@ -37,6 +37,8 @@ class MainActivity3 : AppCompatActivity() {
 
         // Inicializar el botón deshabilitado
         mibinding.botonTirarotravez.isVisible = false
+        mibinding.botonVocal.isEnabled = false
+        mibinding.editTextTextVocal.isEnabled = false
 
         // Recuperar el número de jugadores de SharedPreferences
         sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
@@ -80,13 +82,15 @@ class MainActivity3 : AppCompatActivity() {
 
         // Listener del botón Consonante
         mibinding.botonConsonante.setOnClickListener {
-            comprobarLetra(mibinding.editTextTextConsonante,"aeiou", "Introduce una consonante válida",multiplicador,jugadorActual)
+            comprobarLetra(mibinding.editTextTextConsonante,"AEIOU", "Introduce una consonante válida",multiplicador,jugadorActual)
         }
 
         mibinding.botonVocal.setOnClickListener {
-            comprobarLetra(mibinding.editTextTextVocal,"bcdfghjklmnñpqrstvwxyz", "Introduce una vocal válida",multiplicador,jugadorActual)
-            /*mibinding.botonVocal.isEnabled = false
-            mibinding.editTextTextVocal.isEnabled = false*/
+            comprobarLetra(mibinding.editTextTextVocal,"BCDFGHJKLMNPQRSTVWXYZ", "Introduce una vocal válida",multiplicador,jugadorActual)
+            jugadores.puntuaciones[jugadorActual-1] -= 100
+            val sharedPreferences = getSharedPreferences("gameData", Context.MODE_PRIVATE)
+            jugadores.guardarPuntuaciones(sharedPreferences)
+
         }
 
         // Cuando el jugador resuelve el panel, navega hacia MainActivity2
@@ -151,16 +155,26 @@ class MainActivity3 : AppCompatActivity() {
                 editor.putInt("jugadorActual", siguienteJugador) // Guardamos el siguiente turno
                 editor.apply()
                 Intent()
+            }else if (estadoFrase.contains(letra, ignoreCase = true)) {
+                Toast.makeText(this, "La ya está dicha en la frase. Pierdes el turno", Toast.LENGTH_SHORT).show()
+                val editor = sharedPreferences.edit()
+                val siguienteJugador = gestorTurnos.siguienteTurno() // Actualizar turno
+                editor.putInt("jugadorActual", siguienteJugador) // Guardamos el siguiente turno
+                editor.apply()
+                Intent()
             } else {
-                if(letras=="aeiou"){
+                if(letras=="AEIOU"){
                     val repeticiones = frase.count { it.equals(letra, ignoreCase = true) }
-                    var puntos=0
-                    // Calcular los puntos
-                    puntos += repeticiones * multiplicador  // Multiplicamos las repeticiones por el multiplicador
-
+                    jugadores.puntuaciones[jugador-1]+=(repeticiones*multiplicador)
+                    val sharedPreferences = getSharedPreferences("gameData", Context.MODE_PRIVATE)
+                    jugadores.guardarPuntuaciones(sharedPreferences)
                     // Mostrar los puntos acumulados
-                    Toast.makeText(this, "Puntos: $puntos", Toast.LENGTH_SHORT).show()
-                    puntuaciones(jugador,puntos)
+                    Toast.makeText(this, "Puntos: ${jugadores.puntuaciones[jugador-1]}", Toast.LENGTH_SHORT).show()
+
+                    if (jugadores.puntuaciones[jugador-1] >= 100){
+                        mibinding.botonVocal.isEnabled = true
+                        mibinding.editTextTextVocal.isEnabled = true
+                    }
                 }
 
                 // Construir la nueva frase basada en la consonante
@@ -184,20 +198,16 @@ class MainActivity3 : AppCompatActivity() {
 
                 // Limpiar el EditText después de procesar la consonante
                 editText.text.clear()
-                if(letras=="aeiou"){
+                if(letras=="AEIOU"){
                     mibinding.botonTirarotravez.isVisible = true
                     mibinding.botonConsonante.isEnabled = false
                     mibinding.editTextTextConsonante.isEnabled = false
+                } else if (letras == "BCDFGHJKLMNPQRSTVWXYZ"){
+                    mibinding.botonVocal.isEnabled = false
+                    mibinding.editTextTextVocal.isEnabled = false
                 }
             }
         }
-    }
-    fun puntuaciones(jugadorActual:Int,puntos:Int){
-        jugadores.puntuaciones[jugadorActual - 1] +=puntos
-
-        // Guardar las puntuaciones actualizadas en SharedPreferences
-        val sharedPreferences = getSharedPreferences("gameData", Context.MODE_PRIVATE)
-        jugadores.guardarPuntuaciones(sharedPreferences)
     }
     // Función de extensión para transformar una frase a su forma oculta
     fun String.ocultar(): String {
