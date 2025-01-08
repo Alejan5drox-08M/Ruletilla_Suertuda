@@ -2,32 +2,31 @@ package com.example.ruletasuerte_isaacalejandro
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.RotateAnimation
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
-import androidx.core.view.setPadding
 import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMain2Binding
-import com.example.ruletasuerte_isaacalejandro.databinding.ActivityMainBinding
 import kotlin.random.Random
 
+@Suppress("DEPRECATION")
 class MainActivity2 : AppCompatActivity() {
-    private var puntos = 0
     private var degree = 0
     private var degreeOld = 0
     private val factor:Float= 11.25f
+    private val jugadores = Jugadores()
+    lateinit var builder: Builder
+    lateinit var gestorTurnos: GestorTurnos
+    lateinit var sharedPreferences: SharedPreferences
+
     private lateinit var mibinding: ActivityMain2Binding
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,9 +34,10 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(mibinding.root)
 
         // Recuperar el número de jugadores de SharedPreferences
-        val sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences("gameData", MODE_PRIVATE)
         val numeroJugadores = sharedPreferences.getInt("numeroJugadores", 2) // 2 es el valor por defecto
-
+        gestorTurnos= GestorTurnos(numeroJugadores,sharedPreferences)
+        builder= Builder()
         if (numeroJugadores == 2) {
             mibinding.layoutJugador3.isVisible = false
             mibinding.layoutJugador4.isVisible = false
@@ -46,11 +46,28 @@ class MainActivity2 : AppCompatActivity() {
             mibinding.layoutJugador4.isVisible = false
         }
 
+        jugadores.cargarPuntuaciones(sharedPreferences)
+
+        // Actualizar las etiquetas de puntos
+        mibinding.puntos1.text = jugadores.puntuaciones[0].toString()
+        mibinding.puntos2.text = jugadores.puntuaciones[1].toString()
+        mibinding.puntos3.text = jugadores.puntuaciones[2].toString()
+        mibinding.puntos4.text = jugadores.puntuaciones[3].toString()
+
         mibinding.botonTirar.setOnClickListener {
-            startRotation()
+            mibinding.botonTirar.isEnabled = false
+            val siguienteJugador = gestorTurnos.contador
+            editor(siguienteJugador,sharedPreferences)
+            Toast.makeText(this, "Jugador $siguienteJugador", Toast.LENGTH_SHORT).show()
+            startRotation(siguienteJugador)
+
+            val handler = android.os.Handler()
+            handler.postDelayed({
+                mibinding.botonTirar.isEnabled = true
+            }, 4000)
         }
     }
-    private fun startRotation() {
+    private fun startRotation(jugadorActual: Int) {
         degreeOld = degree % 360
         degree = Random.nextInt(3600) + 720
 
@@ -69,79 +86,65 @@ class MainActivity2 : AppCompatActivity() {
 
                 override fun onAnimationEnd(animation: Animation?) {
                     if(currentNumber(360-(degree%360))=="Pierde Turno"){
-                        Toast.makeText(this@MainActivity2,"Pierdes tu turno", Toast.LENGTH_SHORT).show()
+                        val siguienteJugador = gestorTurnos.siguienteTurno()
+                        editor(siguienteJugador,sharedPreferences)
+                        builder.dialog("PERDIDA DE TURNO","Has perdido turno, Turno del siguiente jugador, a jugar !","Vale",this@MainActivity2)
                     }else if(currentNumber(360-(degree%360))=="Quiebra"){
-                        Toast.makeText(this@MainActivity2,"Quiebras", Toast.LENGTH_SHORT).show()
-                        var puntosPanel=0
+                        quiebras(jugadorActual)
+                        val siguienteJugador = gestorTurnos.siguienteTurno()
+                        editor(siguienteJugador,sharedPreferences)
+                        builder.dialog("Quebraste","Quebraste, tu puntuacion se ha reducido a 0 y pierdes turno. Turno del siguiente jugador, a jugar !","Vale",this@MainActivity2)
                     }else{
                         var miIntent = Intent(this@MainActivity2, MainActivity3::class.java)
-                        miIntent.putExtra("clave", currentNumber(360-(degree%360)))
+                        miIntent.putExtra("multiplicador", currentNumber(360-(degree%360)).toInt())
                         if (miIntent.resolveActivity(packageManager) != null){
                             startActivity(miIntent)
                         }
                     }
-
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {
-                    // Acciones opcionales si se repite la animación
                 }
             })
         }
-
         mibinding.ruleta.startAnimation(rotate)
     }
 
-    private fun currentNumber(degrees: Int):String {
-        var text= ""
-        if(degrees>=(factor*1)&& degrees<(factor*3)){
-            text="60"
+    private fun currentNumber(degrees: Int): String {
+        return when {
+            degrees >= (factor * 1) && degrees < (factor * 3) -> "60"
+            degrees >= (factor * 3) && degrees < (factor * 5) -> "Quiebra"
+            degrees >= (factor * 5) && degrees < (factor * 7) -> "100"
+            degrees >= (factor * 7) && degrees < (factor * 9) -> "Pierde Turno"
+            degrees >= (factor * 9) && degrees < (factor * 11) -> "80"
+            degrees >= (factor * 11) && degrees < (factor * 13) -> "10"
+            degrees >= (factor * 13) && degrees < (factor * 15) -> "60"
+            degrees >= (factor * 15) && degrees < (factor * 17) -> "20"
+            degrees >= (factor * 17) && degrees < (factor * 19) -> "90"
+            degrees >= (factor * 19) && degrees < (factor * 21) -> "Quiebra"
+            degrees >= (factor * 21) && degrees < (factor * 23) -> "100"
+            degrees >= (factor * 23) && degrees < (factor * 25) -> "Pierde Turno"
+            degrees >= (factor * 25) && degrees < (factor * 27) -> "70"
+            degrees >= (factor * 27) && degrees < (factor * 29) -> "20"
+            degrees >= (factor * 29) && degrees < (factor * 31) -> "30"
+            degrees >= (factor * 31) && degrees < 360 || degrees >= 0 && degrees < (factor * 1) -> "40"
+            else -> ""
         }
-        if(degrees>=(factor*3)&& degrees<(factor*5)){
-            text="Quiebra"
+    }
+    @SuppressLint("SetTextI18n")
+    fun quiebras(jugadorActual:Int){
+        jugadores.puntuaciones[jugadorActual-1]=0
+        jugadores.guardarPuntuaciones(sharedPreferences)
+        when (jugadorActual) {
+            1 -> mibinding.puntos1.text=jugadores.puntuaciones[0].toString()
+            2 -> mibinding.puntos2.text=jugadores.puntuaciones[1].toString()
+            3 -> mibinding.puntos3.text=jugadores.puntuaciones[2].toString()
+            4 -> mibinding.puntos4.text=jugadores.puntuaciones[3].toString()
         }
-        if(degrees>=(factor*5)&& degrees<(factor*7)){
-            text="100"
-        }
-        if(degrees>=(factor*7)&& degrees<(factor*9)){
-            text="Pierde Turno"
-        }
-        if(degrees>=(factor*9)&& degrees<(factor*11)){
-            text="80"
-        }
-        if(degrees>=(factor*11)&& degrees<(factor*13)){
-            text="10"
-        }
-        if(degrees>=(factor*13)&& degrees<(factor*15)){
-            text="60"
-        }
-        if(degrees>=(factor*15)&& degrees<(factor*17)){
-            text="20"
-        }
-        if(degrees>=(factor*17)&& degrees<(factor*19)){
-            text="90"
-        }
-        if(degrees>=(factor*19)&& degrees<(factor*21)){
-            text="Quiebra"
-        }
-        if(degrees>=(factor*21)&& degrees<(factor*23)){
-            text="100"
-        }
-        if(degrees>=(factor*23)&& degrees<(factor*25)){
-            text="Pierde Turno"
-        }
-        if(degrees>=(factor*25)&& degrees<(factor*27)){
-            text="70"
-        }
-        if(degrees>=(factor*27)&& degrees<(factor*29)){
-            text="20"
-        }
-        if(degrees>=(factor*29)&& degrees<(factor*31)){
-            text="30"
-        }
-        if((degrees>=(factor*31)&& degrees<360)||(degrees>=0&&degrees<(factor*1))){
-            text="40"
-        }
-        return text
+    }
+    fun editor(siguienteJugador:Int,sharedPreferences: SharedPreferences){
+        val editor = sharedPreferences.edit()
+        editor.putInt("jugadorActual", siguienteJugador)
+        editor.apply()
     }
 }

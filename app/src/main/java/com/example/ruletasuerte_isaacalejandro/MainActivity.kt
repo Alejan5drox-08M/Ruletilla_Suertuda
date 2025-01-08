@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.clear() // Borra todos los valores guardados
         editor.apply()
+        val sharedPreferences1=getSharedPreferences("gameData", MODE_PRIVATE)
+        val editor1=sharedPreferences1.edit()
+        editor1.clear()
+        editor1.apply()
 
 
         mibinding=ActivityMainBinding.inflate(layoutInflater)
